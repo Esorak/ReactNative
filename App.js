@@ -32,36 +32,15 @@ export default function App() {
   const onPressButton = () => {
       setListItem(vieillelist => [...vieillelist, text]);
       setText('');
+      setModalVisible(true);
   };
   
   const removeItem = (indexToRemove) => {
     setListItem(vieillelist => vieillelist.filter((item, index) => index !== indexToRemove));
   };
-  
+    const [modalVisible, setModalVisible] = useState(false);
   
   return (
-
-  //   <Modal
-  //   animationType="slide"
-  //   transparent={true}
-  //   visible={modalVisible}
-  //   onRequestClose={() => {
-  //     Alert.alert('Modal has been closed.');
-  //     setModalVisible(!modalVisible);
-  //   }}>
-  //   <View style={styles.centeredView}>
-  //     <View style={styles.modalView}>
-  //       <Text style={styles.modalText}>Hello World!</Text>
-  //       <Pressable
-  //         style={[styles.button, styles.buttonClose]}
-  //         onPress={() => setModalVisible(!modalVisible)}>
-  //         <Text style={styles.textStyle}>Hide Modal</Text>
-  //       </Pressable>
-  //     </View>
-  //   </View>
-  // </Modal>
-
-
     <View style={styles.container}>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <Text style={styles.MonTitre}>
@@ -81,6 +60,33 @@ export default function App() {
             color="#841584"
             onPress={onPressButton}
           />
+          <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Etes vous sur?</Text>
+            <View style={styles.align}>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textValider}>valider</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button2, styles.buttonClose2]}
+              onPress={() => setModalVisible(!modalVisible)}>
+            <Text style={styles.textRetour}>retour</Text>
+            </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
         </View>
   
         {listItem.map((item, index) => (
@@ -88,7 +94,6 @@ export default function App() {
           <Text style={styles.itemText}  onPress={() => removeItem(index)}  >{item}</Text>
         </View>
       ))}
-  
         <StatusBar style="auto" />
       </ImageBackground>
     </View>
@@ -121,8 +126,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  image: {
+
+  centeredView: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+
+  image: {
     justifyContent: 'center',
     alignItems: 'center',
     height: windowHeight,
@@ -135,7 +163,33 @@ const styles = StyleSheet.create({
   },
 
   item :{
-
     color : '#ff0000',
-  }
+  },
+
+  textRetour: {
+    color: '#FFF',
+    paddingHorizontal: 5,
+    marginHorizontal: 5,
+  },
+
+  textValider: {
+    color: '#FFF',
+    paddingHorizontal: 5,
+    marginHorizontal: 5,
+  },
+
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+
+  buttonClose2:{
+    backgroundColor: '#777'
+  },
+
+  align: {
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+    paddingHorizontal: 10,
+    justifyContent: 'space-between',
+  },
 });
